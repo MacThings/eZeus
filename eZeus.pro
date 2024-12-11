@@ -10,17 +10,26 @@ QMAKE_LFLAGS += -stdlib=libc++
 
 # macOS spezifische Einstellungen
 macx {
-    INCLUDEPATH += /opt/homebrew/include/SDL2
-    LIBS += -L/opt/homebrew/lib -lSDL2_mixer
 
-    # macOS SDK-Version explizit setzen (falls notwendig)
-    QMAKE_MAC_SDK = macosx15.1
+	### x86_64 ###
+    INCLUDEPATH += /usr/local/include/SDL2
+    LIBS += -L/usr/local/lib -lSDL2_mixer
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64
     
+    ### ARM64 ###
+    #INCLUDEPATH += /opt/homebrew/include/SDL2
+    #LIBS += -L/opt/homebrew/lib -lSDL2_mixer
+    #QMAKE_APPLE_DEVICE_ARCHS = arm64
+
+
+    QMAKE_MAC_SDK = macosx
+
+    # Zusätzliche Libraries
     INCLUDEPATH += /usr/include
     LIBS += -lpthread
     LIBS += -L/usr/lib
 
-    # Optional: Weitere Flags für Optimierung
+    # Optional: Optimierungsflags für Release
     QMAKE_CFLAGS_RELEASE += -O3
     QMAKE_CXXFLAGS_RELEASE += -O3
 }
