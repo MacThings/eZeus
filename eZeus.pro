@@ -4,6 +4,28 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+# Gemeinsame Einstellungen
+QMAKE_CXXFLAGS += -std=c++17
+QMAKE_LFLAGS += -stdlib=libc++
+
+# macOS spezifische Einstellungen
+macx {
+    INCLUDEPATH += /opt/homebrew/include/SDL2
+    LIBS += -L/opt/homebrew/lib -lSDL2_mixer
+
+    # macOS SDK-Version explizit setzen (falls notwendig)
+    QMAKE_MAC_SDK = macosx15.1
+    
+    INCLUDEPATH += /usr/include
+    LIBS += -lpthread
+    LIBS += -L/usr/lib
+
+    # Optional: Weitere Flags für Optimierung
+    QMAKE_CFLAGS_RELEASE += -O3
+    QMAKE_CXXFLAGS_RELEASE += -O3
+}
+
+# Windows spezifische Einstellungen
 win32 {
     RC_ICONS += C:\Users\maury\Documents\eZeusBuild\zeus.ico
     QMAKE_CFLAGS_RELEASE += /O2 -O2 /GL
@@ -15,7 +37,10 @@ win32 {
     LIBS += -LC:\Users\maury\Documents\eZeusLibs\SDL2_ttf-2.22.0\lib\x64
     LIBS += -LC:\Users\maury\Documents\eZeusLibs\SDL2_mixer-2.8.0\lib\x64
     LIBS += -LC:\Users\maury\Documents\eZeusLibs\SDL2_image-2.8.2\lib\x64
-} unix {
+}
+
+# Linux spezifische Einstellungen
+unix:!macx {
     QMAKE_CFLAGS_RELEASE -= -O2
     QMAKE_CFLAGS_RELEASE -= -O1
     QMAKE_CXXFLAGS_RELEASE -= -O2
