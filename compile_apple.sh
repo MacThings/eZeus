@@ -5,13 +5,48 @@
 # brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 # arch -x86_64 /usr/local/bin/brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 
-export CPATH=/opt/homebrew/include:$CPATH
-export LIBRARY_PATH=/opt/homebrew/lib:$LIBRARY_PATH
+# Clean previous builds if necessary
+rm -rf build
 
-mkdir build_x86 arm64
+# Create build directory
+mkdir build
 
-cd build_x86
+# Enter build directory
+cd build
 
-qmake ..
-
+# Build x86
+echo "Building for x86_64..."
+qmake QMAKE_APPLE_DEVICE_ARCHS=x86_64 ..
 make
+make clean
+mv eZeus eZeus_x86
+
+echo "x86_64 build completed successfully!"
+
+# Build arm64
+echo "Building for ARM64..."
+qmake QMAKE_APPLE_DEVICE_ARCHS=arm64 ..
+make
+make clean
+mv eZeus eZeus_arm64
+
+rm Makefile
+
+mkdir libs_x86 libs_arm64 libs
+
+dylibbundler -of -cd -b -x "eZeus_x86" -d "libs_x86" -p "@executable_path/libs/"
+dylibbundler -of -cd -b -x "eZeus_arm64" -d "libs_arm64" -p "@executable_path/libs/"
+
+cd libs_arm64
+
+for a in *.dylib; do lipo "$a" ../libs_x86/"$a" -output ../libs/"$a" -create; done
+
+cd ..
+
+rm -rf libs_*
+
+lipo eZeus_arm64 eZeus_x86 -output eZeus -create
+
+rm eZeus_*
+
+echo "Builds completed!"
