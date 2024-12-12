@@ -70,6 +70,7 @@ cp -r Adventures build/eZeus
 mkdir build/eZeus/Save
 cp Zeus_Text.xml Zeus_Text_DE.xml build/eZeus
 
+cd build
 
 mkdir DATA Audio Model
 
