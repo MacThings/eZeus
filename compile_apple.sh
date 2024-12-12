@@ -14,4 +14,4 @@ cd build_x86
 
 qmake ..
 
-make -C ..
+make
