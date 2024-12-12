@@ -8,28 +8,26 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++17
 QMAKE_LFLAGS += -stdlib=libc++
 
-# macOS spezifische Einstellungen
 macx {
+    # Erlaube Architekturwahl über Kommandozeilenparameter oder Standardwert
+    !equals(QMAKE_APPLE_DEVICE_ARCHS, x86_64): !equals(QMAKE_APPLE_DEVICE_ARCHS, arm64): QMAKE_APPLE_DEVICE_ARCHS = x86_64
 
-	### x86_64 ###
-    INCLUDEPATH += /usr/local/include/SDL2
-    LIBS += -L/usr/local/lib -lSDL2_mixer
-    QMAKE_APPLE_DEVICE_ARCHS = x86_64
-    
-    ### ARM64 ###
-    #INCLUDEPATH += /opt/homebrew/include/SDL2
-    #LIBS += -L/opt/homebrew/lib -lSDL2_mixer
-    #QMAKE_APPLE_DEVICE_ARCHS = arm64
+    message("Target architecture: $$QMAKE_APPLE_DEVICE_ARCHS")
 
+    # Architekturabhängige Einstellungen
+    contains(QMAKE_APPLE_DEVICE_ARCHS, x86_64) {
+        INCLUDEPATH += /usr/local/include/SDL2
+        LIBS += -L/usr/local/lib -lSDL2_mixer
+        message("Building for x86_64")
+    }
+
+    contains(QMAKE_APPLE_DEVICE_ARCHS, arm64) {
+        INCLUDEPATH += /opt/homebrew/include/SDL2
+        LIBS += -L/opt/homebrew/lib -lSDL2_mixer
+        message("Building for arm64")
+    }
 
     QMAKE_MAC_SDK = macosx
-
-    # Zusätzliche Libraries
-    INCLUDEPATH += /usr/include
-    LIBS += -lpthread
-    LIBS += -L/usr/lib
-
-    # Optional: Optimierungsflags für Release
     QMAKE_CFLAGS_RELEASE += -O3
     QMAKE_CXXFLAGS_RELEASE += -O3
 }
