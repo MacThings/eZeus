@@ -5,6 +5,7 @@
 # brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 # arch -x86_64 /usr/local/bin/brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 
-qmake 
+qmake
+export CPATH=/opt/homebrew/include:$CPATH
+export LIBRARY_PATH=/opt/homebrew/lib:$LIBRARY_PATH
 make
-
