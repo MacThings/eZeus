@@ -5,6 +5,10 @@
 # brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 # arch -x86_64 /usr/local/bin/brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf git qt make 
 
+# Set environment paths for x86 architecture
+export CPATH=/usr/local/include:$CPATH
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+
 # Clean previous builds if necessary
 rm -rf build
 
