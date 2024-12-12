@@ -15,3 +15,5 @@ into the linked GAMEFILES Folder and simply start the app.
 You can DL it here:
 
 https://workupload.com/file/QY9Yz3AwKvA
+
+If you want German Text, go into the Package and rename Zeus_Text_DE.xml to Zeus_Text.xml
