@@ -5,7 +5,9 @@ https://github.com/MaurycyLiebner/eZeus
 I compiled it for macOS as Universal Binary (x86/ARM). Simply put the Folders
 
 Audio
+
 DATA
+
 Model
 
 into the linked GAMEFILES Folder and simply start the app. 
