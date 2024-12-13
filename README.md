@@ -2,7 +2,7 @@ Forked from:
 
 https://github.com/MaurycyLiebner/eZeus
 
-I compiled it for macOS as Universal Binary (x86/ARM). Simply put the Folders
+I compiled it for macOS as Universal Binary (x86/ARM). Simply put the Folders from the original Game
 
 Audio
 
